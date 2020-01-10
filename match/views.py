@@ -37,6 +37,11 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = group_serializer.GroupTeamsDataSerializer(group, read_only=True)
         return Response(serializer.data)
 
+    def retrieve(self, request,pk=None, *args, **kwargs):
+        group = self.get_object()
+        serializer = group_serializer.GroupDetailsDataSerializer(group,read_only=True)
+        return Response(serializer.data)
+
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Category.objects.all()
@@ -52,5 +57,11 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     def get_groups(self, request, pk=None):
         category = self.get_object()
         serializer = category_serializer.CategoryGroupSerializer(category, read_only=True)
+        return Response(serializer.data)
+
+    @action(methods=['get'], detail=True, url_path="teams")
+    def get_teams(self,request,pk=None):
+        category = self.get_object()
+        serializer = category_serializer.CategoryTeamSerializer(category,read_only=True)
         return Response(serializer.data)
 

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from match.models import Group
-from match.serializer import team_serializer
 
 
 class GroupDataNameSerializer(serializers.ModelSerializer):
@@ -10,20 +9,21 @@ class GroupDataNameSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
-from match.serializer import category_serializer
+from match.serializer import category_serializer,team_serializer
 
 
-class GroupCategoryDataSerializer(serializers.ModelSerializer):
+class GroupDetailsDataSerializer(serializers.ModelSerializer):
     category = category_serializer.CategoryDataSerializer(many=False, read_only=True)
+    group_teams = team_serializer.TeamDataSerializer(read_only=True,many=True)
 
     class Meta:
         model = Group
-        fields = ['id', 'name', 'category']
+        fields = ['id', 'name', 'category','group_teams']
 
 
 class GroupTeamsDataSerializer(serializers.ModelSerializer):
-    teams = team_serializer.TeamDataSerializer(many=True, read_only=True)
+    group_teams = team_serializer.TeamDataSerializer(many=True, read_only=True)
 
     class Meta:
         model = Group
-        fields = ['id', 'name', 'teams']
+        fields = ['id', 'name', 'group_teams']
