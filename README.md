@@ -1,0 +1,162 @@
+# Route and Formatting
+- /api/team/
+```JSON
+[
+	{
+		"id"
+		"name"
+		"win"
+		"lose"
+		"draw"
+		"goal"
+	},
+	....
+]
+```
+- /api/team/{pk}/
+```JSON
+{
+		"id"
+		"name"
+		"win"
+		"lose"
+		"draw"
+		"goal"
+		"team_players": [
+			{
+				"id"
+				"name"
+				"profile_picture"
+			},
+			....
+		]
+}
+```
+- /api/team/{pk}/players/
+```JSON
+{
+	"id"
+	"name"
+	"team_players": [
+		{
+			"id"
+			"name"
+			"profile_picture"
+		}
+	]
+	
+}
+```
+- /api/group/
+```JSON
+[
+	{
+		"id"
+		"name"
+	},
+	...
+]
+```
+- /api/group/{pk}/
+```JSON
+{
+	"id"
+	"name"
+	"category":{
+		"id"
+		"name"
+	}
+	"group_teams":[
+		{
+			"id"
+			"name"
+			"win"
+			"lose"
+			"draw"
+			"goal"
+		},
+		...
+	]
+}
+```
+- /api/group/{pk}/teams/
+```JSON
+{
+	"id"
+	"name"
+	"group_teams":[
+		{
+			"id"
+			"name"
+			"win"
+			"lose"
+			"draw"
+			"goal"
+		},
+		...
+	]
+}
+```
+- /api/category/
+```JSON
+[
+	{
+		"id"
+		"name"
+	}
+]
+```
+- /api/category/{pk}/
+```JSON
+{
+	"id"
+	"name"
+}
+```
+- /api/category/{pk}/players/
+```JSON
+{
+	"id"
+	"name"
+	"category_players":[
+		{
+			"id"
+			"name"
+			"profile_picture"
+		},
+		...
+	]
+}
+```
+- /api/category/{pk}/teams/
+```JSON
+{
+	"id"
+	"name"
+	"category_teams":[
+		{
+			"id"
+			"name"
+			"win"
+			"lose"
+			"draw"
+			"goal"
+		},
+		...
+	]
+}
+```
+- /api/category/{pk}/groups/
+```JSON
+{
+	"id"
+	"name"
+	"match_groups":[
+		{
+			"id"
+			"name"
+		},
+		...
+	]
+}
+```
