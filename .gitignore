@@ -220,7 +220,6 @@ pyvenv.cfg
 .venv
 env/
 venv/
-venv/*
 ENV/
 env.bak/
 venv.bak/
@@ -243,4 +242,5 @@ media/*
 media/
 static/*
 !**/static/
-
+**/migrations/*
+!**/migrations/__init__.py
