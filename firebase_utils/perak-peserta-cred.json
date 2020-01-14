@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "perak-peserta",
+  "private_key_id": "2cc5de5c0eddf7b07ebc81a593e20c6935008a7f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD0Z76GBgaZM/vM\n+Ej14SgmJf2oYlbtgWBM2MF6Gedu0sw4tCJgnTBmclLxIpS3QO9+HOkzsuuRw4mK\n1iU3W9qkF1Yx24cIdCd3irzqsvXLs/CSgjREJWNrpDQU+XXALBCK5+tzweaC0DkV\n2PHLe1gIovCyzCmbSRS5f6BGsuIKbv99Adrou3yR3PHQXpeKmgBM3KwIcPdIdClg\n0cqBuyOnM4KrGI84C/wyJc87OfQQ9gUhE4emUaeD1LDnU9Nw3ihmQxcURMcxtWIz\nmdvbsNHaX9Ib100SJzAgEXgwW9R6zA76kHJeMVpooASJueMqxDq0uAZUfuxAVUzi\nMqAM6Ia9AgMBAAECggEACspTb6HaTo8XEHKBcB+XxkVk80yc12Ff9yHrutW5cXEL\nlKZOopLWCp6ErxeOgXUJDc7oydWd+mJrvbjczZqifB5OpHwIyb9Xvbqe7W1na4NU\nfUy+fNK6FrbEw4yhnabPDSmWQYGqSRS4gdCBQ7FR+UGjsap7XMXSIoAcu0+q/02s\nplHS88qQ4UMvzcvD55MZTMq13AiGvQmdZc+wVvjb8JbALa/u8WBAe+Gw951JoZWg\nhN/svUybo3wpVMlpchRIue4cmKCIq0JlDx/IS6RK8TFf3VREBK9IkYnyhx0/0CvU\n3goE31pVZcKMJvqJ/R1PCTI6Yj1vVI7+ksP9HVEEqQKBgQD/Wyd+hpuhNAovPXDy\nwifHgiB3PlQy51j2hzsqlHeZ12qPTMnr2Su2wuv747YFJh88GZ3ectMY7KTImmJi\nYrUk5N5hSs4Iji2SZnSKqIpcGgFG1fsKVrJXJcQAebcl1b+1/AzsL2OUlYNS/bGv\nwb8kmJGVZnLY/+JpxTc6FigYpQKBgQD1BYVH/JD5VqLSaa1ibMTt3oQkj9xNcjtq\n0WlPr7IoIW6fLG0IfKN8QZBTLaw9/1IVSd3JthWyChWfvU8lu6DDE1AuYbiEAwNs\nIXLYOrbtefkKmjQ8GdO3aL/oB3jEboilibooskbWnp0Hh4C3Y6A/GKs5DWJMApjR\nN8j0frbCOQKBgGp123phrmK/6nsVd5COJ72C3/w27S2nzCxD5wPykAaAi/mgfxKo\nIRR6IZ6LqihtY1pQJ8RFRQNALddAnkH8ex8dmCUh5dIlTJSbyHzClaSeZufccGQ4\nDvRMV3IHTLcmbV327oBNpYud5flksX7gHMuqHBAYfUtBK2kDgunhsOfNAoGARJfu\nDxAS2eq6HGO/SV2f5+OyZLXte7TuE2JatBdAreFmIaODRqv17LRCHjccECMpLJKI\nR471Femi0hxiSvLy94mxmbp7uGFLlPrsNsKBMYxC/wfadbTZQ3BMwT1OPtee45Di\nD8CQ+kZfOZtimnSGiQNz873edd8IPxH57RCIQ2kCgYEAmGZG8XV2bEYY2JQhxzZ/\n7fgqiGhmYB5H+lzt9lYX7CtGGQE7SZdGqjtRidHNJhJPcPUHKJuahRJ8/cEqHT49\nEqtFZCxDPtQVSz3paPkIiMBaiR3g36WeEd1zvfEjzi10axs1Lvz0yaAnTvvdQvSp\n0ZyBfBefMeTK/AgnJKdF5AA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-b99hp@perak-peserta.iam.gserviceaccount.com",
+  "client_id": "114576483221289595828",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-b99hp%40perak-peserta.iam.gserviceaccount.com"
+}

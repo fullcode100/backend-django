@@ -30,6 +30,7 @@ class Team(models.Model):
     position = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category_teams", null=True,
                                  blank=True)
+    team_logo = models.URLField(blank=True, null=True)
 
     class Meta:
         ordering = ['position']
@@ -44,7 +45,7 @@ class Player(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True, related_name="team_players")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True,
                                  related_name="category_players")
-    profile_picture = models.ImageField(null=True, blank=True)
+    profile_picture = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.name
