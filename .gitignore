@@ -244,3 +244,4 @@ static/*
 !**/static/
 **/migrations/*
 !**/migrations/__init__.py
+firebase_utils/migration.json
