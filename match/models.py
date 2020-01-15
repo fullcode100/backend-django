@@ -46,6 +46,7 @@ class Player(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True,
                                  related_name="category_players")
     profile_picture = models.URLField(blank=True, null=True)
+    captain = models.BooleanField(default=False,null=True,blank=True)
 
     def __str__(self):
         return self.name
