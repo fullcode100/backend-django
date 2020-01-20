@@ -1,3 +1,5 @@
+from datetime import time, date
+
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -26,10 +28,14 @@ class Team(models.Model):
     win = models.PositiveIntegerField(default=0)
     lose = models.PositiveIntegerField(default=0)
     draw = models.PositiveIntegerField(default=0)
-    goal = models.PositiveIntegerField(default=0)
     position = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
+    points = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category_teams", null=True,
                                  blank=True)
+    goal_masuk = models.PositiveIntegerField(default=0)
+    goal_kebobolan = models.PositiveIntegerField(default=0)
+    selisih_goal = models.PositiveIntegerField(default=0)
+    banyak_match = models.PositiveIntegerField(default=0)
     team_logo = models.URLField(blank=True, null=True)
 
     class Meta:
@@ -46,7 +52,7 @@ class Player(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True,
                                  related_name="category_players")
     profile_picture = models.URLField(blank=True, null=True)
-    captain = models.BooleanField(default=False,null=True,blank=True)
+    captain = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -63,3 +69,22 @@ class PostThread(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class MatchHistory(models.Model):
+    team_a = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team_a_history")
+    team_b = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team_b_history")
+    match_date = models.DateField()
+    is_game = models.BooleanField(default=False)
+    team_a_goal = models.PositiveIntegerField(default=0)
+    team_b_goal = models.PositiveIntegerField(default=0)
+    stage = models.CharField(max_length=100)
+    is_a_win = models.BooleanField(default=False)
+    is_b_win = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['match_date']
+
+    def __str__(self):
+        return "Match {} vs {} tanggal {}".format(self.team_a.name,self.team_b.name,self.match_date.strftime())
+

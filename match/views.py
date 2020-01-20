@@ -1,14 +1,11 @@
-from django.contrib.auth.models import User
-from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 # Create your views here.
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from match import models
-from match.serializer.team_serializer import TeamDetailSerializer, TeamDataSerializer
-from match.serializer import group_serializer, category_serializer
-from match.serializer import team_serializer
+from match.serializer.team_serializer import TeamDataSerializer
+from match.serializer import group_serializer, category_serializer, team_serializer, match_history_serializer
 
 
 class TeamViewSet(viewsets.ReadOnlyModelViewSet):
@@ -37,9 +34,9 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = group_serializer.GroupTeamsDataSerializer(group, read_only=True)
         return Response(serializer.data)
 
-    def retrieve(self, request,pk=None, *args, **kwargs):
+    def retrieve(self, request, pk=None, *args, **kwargs):
         group = self.get_object()
-        serializer = group_serializer.GroupDetailsDataSerializer(group,read_only=True)
+        serializer = group_serializer.GroupDetailsDataSerializer(group, read_only=True)
         return Response(serializer.data)
 
 
@@ -60,8 +57,12 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
     @action(methods=['get'], detail=True, url_path="teams")
-    def get_teams(self,request,pk=None):
+    def get_teams(self, request, pk=None):
         category = self.get_object()
-        serializer = category_serializer.CategoryTeamSerializer(category,read_only=True)
+        serializer = category_serializer.CategoryTeamSerializer(category, read_only=True)
         return Response(serializer.data)
 
+
+class MatchHistoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.MatchHistory.objects.all()
+    serializer_class = match_history_serializer.MatchHistorySerializer
