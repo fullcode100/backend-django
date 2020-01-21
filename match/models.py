@@ -45,6 +45,36 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        self.selisih_goal = abs(self.goal_kebobolan - self.goal_masuk)
+        super(Team, self).save(*args, **kwargs)
+
+    def add_goal(self, masuk, kebobolan):
+        self.goal_masuk += masuk
+        self.goal_kebobolan += kebobolan
+
+    def reduce_goal(self, masuk, kebobolan):
+        self.goal_masuk -= masuk
+        self.goal_kebobolan -= kebobolan
+
+    def add_match_stat(self, status):
+        self.banyak_match += 1
+        if status.lower() == "win":
+            self.win += 1
+        elif status.lower() == "lose":
+            self.lose += 1
+        elif status.lower() == "draw":
+            self.draw += 1
+
+    def reduce_match_stat(self, status):
+        self.banyak_match -= 1
+        if status.lower() == "win":
+            self.win -= 1
+        elif status.lower() == "lose":
+            self.lose -= 1
+        elif status.lower() == "draw":
+            self.draw -= 1
+
 
 class Player(models.Model):
     name = models.CharField(max_length=100)
@@ -83,8 +113,7 @@ class MatchHistory(models.Model):
     is_b_win = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['match_date']
+        ordering = ['-match_date']
 
     def __str__(self):
-        return "Match {} vs {} tanggal {}".format(self.team_a.name,self.team_b.name,self.match_date.strftime())
-
+        return "Match {} vs {} tanggal {}".format(self.team_a.name, self.team_b.name, self.match_date)

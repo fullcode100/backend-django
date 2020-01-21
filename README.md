@@ -8,7 +8,11 @@
 		"win"
 		"lose"
 		"draw"
-		"goal"
+		"goal_masuk"
+        "goal_kebobolan"
+        "points"
+        "selisih_goal"
+        "banyak_match"
 	},
 	....
 ]
