@@ -25,7 +25,11 @@
 		"win"
 		"lose"
 		"draw"
-		"goal"
+		"goal_masuk"
+        "goal_kebobolan"
+        "points"
+        "selisih_goal"
+        "banyak_match"
 		"team_players": [
 			{
 				"id"
@@ -34,6 +38,7 @@
 			},
 			....
 		]
+        "category"
 }
 ```
 - /api/team/{pk}/players/
@@ -77,7 +82,11 @@
 			"win"
 			"lose"
 			"draw"
-			"goal"
+            "goal_masuk"
+            "goal_kebobolan"
+            "points"
+            "selisih_goal"
+            "banyak_match"
 		},
 		...
 	]
@@ -95,7 +104,11 @@
 			"win"
 			"lose"
 			"draw"
-			"goal"
+            "goal_masuk"
+            "goal_kebobolan"
+            "points"
+            "selisih_goal"
+            "banyak_match"
 		},
 		...
 	]
@@ -144,7 +157,11 @@
 			"win"
 			"lose"
 			"draw"
-			"goal"
+            "goal_masuk"
+            "goal_kebobolan"
+            "points"
+            "selisih_goal"
+            "banyak_match"
 		},
 		...
 	]
@@ -162,5 +179,48 @@
 		},
 		...
 	]
+}
+```
+
+- /api/match_history
+```json
+[
+    {
+        "id"
+        "team_a": {
+            "id"
+            "name"
+        }
+        "team_b": {
+            "id"
+            "name"
+        }
+        "is_game"
+        "team_a_goal"
+        "team_b_goal"
+        "stage"
+        "is_a_win"
+        "is_b_win"
+    }
+]
+```
+- /api/match_history/{pk}/
+```json
+{
+    "id"
+    "team_a": {
+        "id"
+        "name"
+    }
+    "team_b": {
+        "id"
+        "name"
+    }
+    "is_game"
+    "team_a_goal"
+    "team_b_goal"
+    "stage"
+    "is_a_win"
+    "is_b_win"
 }
 ```
