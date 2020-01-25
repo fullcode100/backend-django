@@ -84,16 +84,16 @@ for key in teams.keys():
             team_data = {
                 'details': team_document_object,
                 'logo': bucket.blob(team_document_object['teamLogo']) if "teamLogo" in team_document_object else None,
-                'players': team_document.collection("player")
+                'players': team_document.collection("player"),
             }
             if team_data['logo']:
                 team_data['logo'].make_public()
                 team_object = models.Team(name=team_name, category=category[key],
-                                          team_logo=team_data['logo'].public_url)
+                                          team_logo=team_data['logo'].public_url,manager=team_data['details'].get('namaLengkap_manager',""))
             else:
                 team_object = models.Team(name=team_name, category=category[key])
             team_object.save()
-            if key != "futsal-team":
+            if key != "futsal":
                 captain = models.Player(name=team_document_object['namaLengkap_kapten'], category=category[key],
                                         team=team_object, captain=True)
                 captain.save()

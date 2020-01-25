@@ -3,14 +3,29 @@ from django.contrib import admin
 # Register your models here.
 from match.models import Category, Player, Team, Group, MatchHistory
 
-models = [Category, Player, Group]
+models = [Category]
 
 for i in models:
     admin.site.register(i)
 
 
+@admin.register(Group)
+class GroupAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'category'
+    ]
+
+
+@admin.register(Player)
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ['name', 'team', 'category']
+
+
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
+    exclude = ['category']
+    list_display = ['name', 'group', 'category']
     readonly_fields = ['goal_masuk',
                        'goal_kebobolan',
                        'selisih_goal',
@@ -19,9 +34,15 @@ class TeamAdmin(admin.ModelAdmin):
                        'lose',
                        'win']
 
+    def save_model(self, request, obj, form, change):
+        obj.category = obj.group.category
+        super().save_model(request, obj, form, change)
+
 
 @admin.register(MatchHistory)
 class MatchHistoryAdmin(admin.ModelAdmin):
+    exclude = ['group']
+
     def save_model(self, request, obj, form, change):
         team_a = obj.team_a
         team_b = obj.team_b
@@ -56,5 +77,7 @@ class MatchHistoryAdmin(admin.ModelAdmin):
 
         team_a.save()
         team_b.save()
+
+        obj.group = team_a.group
 
         super().save_model(request, obj, form, change)

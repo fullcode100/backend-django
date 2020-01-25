@@ -19,7 +19,7 @@ class Group(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="match_groups", blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return "{}-{}".format(self.name,self.category)
 
 
 class Team(models.Model):
@@ -37,13 +37,14 @@ class Team(models.Model):
     selisih_goal = models.PositiveIntegerField(default=0)
     banyak_match = models.PositiveIntegerField(default=0)
     team_logo = models.URLField(blank=True, null=True)
+    manager = models.CharField(max_length=100,null=True,blank=True)
 
     class Meta:
         ordering = ['position']
         unique_together = [('position', 'group')]
 
     def __str__(self):
-        return self.name
+        return "{}-{}".format(self.name,self.group)
 
     def save(self, *args, **kwargs):
         self.selisih_goal = abs(self.goal_kebobolan - self.goal_masuk)
@@ -61,19 +62,23 @@ class Team(models.Model):
         self.banyak_match += 1
         if status.lower() == "win":
             self.win += 1
+            self.points += 3
         elif status.lower() == "lose":
             self.lose += 1
         elif status.lower() == "draw":
             self.draw += 1
+            self.points += 1
 
     def reduce_match_stat(self, status):
         self.banyak_match -= 1
         if status.lower() == "win":
             self.win -= 1
+            self.points -= 3
         elif status.lower() == "lose":
             self.lose -= 1
         elif status.lower() == "draw":
             self.draw -= 1
+            self.points -= 1
 
 
 class Player(models.Model):
@@ -111,9 +116,10 @@ class MatchHistory(models.Model):
     stage = models.CharField(max_length=100)
     is_a_win = models.BooleanField(default=False)
     is_b_win = models.BooleanField(default=False)
+    group = models.ForeignKey(Group,on_delete=models.CASCADE,related_name="group_match_history")
 
     class Meta:
         ordering = ['-match_date']
 
     def __str__(self):
-        return "Match {} vs {} tanggal {}".format(self.team_a.name, self.team_b.name, self.match_date)
+        return "Match {} vs {} tanggal {}".format(self.team_a.name, self.team_b.name, self.match_date.strftime("%d/%m/%Y"))

@@ -39,6 +39,7 @@
 			....
 		]
         "category"
+        "manager"
 }
 ```
 - /api/team/{pk}/players/
@@ -201,6 +202,10 @@
         "stage"
         "is_a_win"
         "is_b_win"
+        "group": {
+            "id"
+            "name"
+        }
     }
 ]
 ```

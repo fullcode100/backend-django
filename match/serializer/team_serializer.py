@@ -26,7 +26,7 @@ class TeamDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ['id', 'name', 'win', 'lose', 'draw', 'goal_masuk', 'goal_kebobolan', 'points', 'selisih_goal',
-                  'banyak_match', 'team_players', 'category']
+                  'banyak_match', 'team_players', 'category','manager']
 
 
 class TeamPlayersSerializer(serializers.ModelSerializer):
