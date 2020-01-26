@@ -116,7 +116,7 @@ class MatchHistory(models.Model):
     stage = models.CharField(max_length=100)
     is_a_win = models.BooleanField(default=False)
     is_b_win = models.BooleanField(default=False)
-    group = models.ForeignKey(Group,on_delete=models.CASCADE,related_name="group_match_history")
+    group = models.ForeignKey(Group,on_delete=models.CASCADE,related_name="group_match_history",blank=True,null=True)
 
     class Meta:
         ordering = ['-match_date']
