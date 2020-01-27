@@ -7,13 +7,19 @@ class TeamDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ['id', 'name', 'win', 'lose', 'draw', 'goal_masuk', 'goal_kebobolan', 'points', 'selisih_goal',
-                  'banyak_match']
+                  'banyak_match', 'team_logo']
 
 
 class TeamNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ['id', 'name']
+
+
+class TeamMinimizeDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ['id', 'name', 'team_logo']
 
 
 from match.serializer import player_serializer, category_serializer
@@ -26,7 +32,7 @@ class TeamDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ['id', 'name', 'win', 'lose', 'draw', 'goal_masuk', 'goal_kebobolan', 'points', 'selisih_goal',
-                  'banyak_match', 'team_players', 'category','manager']
+                  'banyak_match', 'team_players', 'category', 'manager', 'team_logo']
 
 
 class TeamPlayersSerializer(serializers.ModelSerializer):

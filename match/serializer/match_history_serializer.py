@@ -5,8 +5,8 @@ from match.serializer import team_serializer,group_serializer
 
 
 class MatchHistorySerializer(serializers.ModelSerializer):
-    team_a = team_serializer.TeamNameSerializer(many=False,read_only=True)
-    team_b = team_serializer.TeamNameSerializer(many=False,read_only=True)
+    team_a = team_serializer.TeamMinimizeDataSerializer(many=False,read_only=True)
+    team_b = team_serializer.TeamMinimizeDataSerializer(many=False,read_only=True)
     match_date = serializers.DateField(format="%d/%m/%Y")
     group = group_serializer.GroupDataNameSerializer(many=False,read_only=True)
 
