@@ -76,11 +76,11 @@ WSGI_APPLICATION = 'perak.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'peraktest',
-        'USER': 'perak',
-        'PASSWORD': 'perak123',
-        'HOST': 'localhost',
-        'PORT': ''
+        'NAME': os.environ['DBNAME'],
+        'USER': os.environ['DBUSER'],
+        'PASSWORD': os.environ['DBPASSWORD'],
+        'HOST': os.environ['DBHOST'],
+        'PORT': os.environ['DBPORT']
     }
 }
 
