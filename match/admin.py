@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from match.models import Category, Player, Team, Group, MatchHistory
+from match.models import Category, Player, Team, Group, MatchHistory, PostThread
 
-models = [Category]
+models = [Category,PostThread]
 
 for i in models:
     admin.site.register(i)
