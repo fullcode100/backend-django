@@ -41,7 +41,6 @@ class Team(models.Model):
 
     class Meta:
         ordering = ['position']
-        unique_together = [('position', 'group')]
 
     def __str__(self):
         return "{}-{}".format(self.name,self.group)
