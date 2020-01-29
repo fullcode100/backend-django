@@ -41,7 +41,7 @@ class TeamAdmin(admin.ModelAdmin):
 
 @admin.register(MatchHistory)
 class MatchHistoryAdmin(admin.ModelAdmin):
-    exclude = ['group']
+    exclude = ['group','category']
 
     def save_model(self, request, obj, form, change):
         team_a = obj.team_a
@@ -79,5 +79,6 @@ class MatchHistoryAdmin(admin.ModelAdmin):
         team_b.save()
 
         obj.group = team_a.group
+        obj.category = team_a.category
 
         super().save_model(request, obj, form, change)

@@ -9,6 +9,9 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    win = models.IntegerField(blank=True)
+    lose = models.IntegerField(blank=True)
+    draw = models.IntegerField(blank=True)
 
     def __str__(self):
         return self.name
@@ -61,23 +64,25 @@ class Team(models.Model):
         self.banyak_match += 1
         if status.lower() == "win":
             self.win += 1
-            self.points += 3
+            self.points += self.category.win
         elif status.lower() == "lose":
             self.lose += 1
+            self.points += self.category.lose
         elif status.lower() == "draw":
             self.draw += 1
-            self.points += 1
+            self.points += self.category.draw
 
     def reduce_match_stat(self, status):
         self.banyak_match -= 1
         if status.lower() == "win":
             self.win -= 1
-            self.points -= 3
+            self.points -= self.category.win
         elif status.lower() == "lose":
             self.lose -= 1
+            self.points -= self.category.lose
         elif status.lower() == "draw":
             self.draw -= 1
-            self.points -= 1
+            self.points -= self.category.draw
 
 
 class Player(models.Model):
@@ -112,10 +117,11 @@ class MatchHistory(models.Model):
     is_game = models.BooleanField(default=False)
     team_a_goal = models.PositiveIntegerField(default=0)
     team_b_goal = models.PositiveIntegerField(default=0)
-    stage = models.CharField(max_length=100)
+    stage = models.CharField(max_length=100, blank=True,null=True)
     is_a_win = models.BooleanField(default=False)
     is_b_win = models.BooleanField(default=False)
     group = models.ForeignKey(Group,on_delete=models.CASCADE,related_name="group_match_history",blank=True,null=True)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="category_match_history",blank=True,null=True)
 
     class Meta:
         ordering = ['-match_date']

@@ -66,3 +66,9 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
 class MatchHistoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.MatchHistory.objects.all()
     serializer_class = match_history_serializer.MatchHistorySerializer
+
+    def retrieve(self, request, pk=None, *args, **kwargs):
+        category = models.Category.objects.get(name=pk)
+        query = models.MatchHistory.objects.filter(category=category)
+        serializer = match_history_serializer.MatchHistorySerializer(query, many=True, read_only=True)
+        return Response(serializer.data)
