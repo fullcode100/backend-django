@@ -1,6 +1,7 @@
 from datetime import time, date
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -9,9 +10,9 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    win = models.IntegerField(blank=True)
-    lose = models.IntegerField(blank=True)
-    draw = models.IntegerField(blank=True)
+    win = models.IntegerField(default=0)
+    lose = models.IntegerField(default=0)
+    draw = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -37,7 +38,7 @@ class Team(models.Model):
                                  blank=True)
     goal_masuk = models.PositiveIntegerField(default=0)
     goal_kebobolan = models.PositiveIntegerField(default=0)
-    selisih_goal = models.PositiveIntegerField(default=0)
+    selisih_goal = models.IntegerField(default=0)
     banyak_match = models.PositiveIntegerField(default=0)
     team_logo = models.URLField(blank=True, null=True)
     manager = models.CharField(max_length=100,null=True,blank=True)
@@ -49,7 +50,7 @@ class Team(models.Model):
         return "{}-{}".format(self.name,self.group)
 
     def save(self, *args, **kwargs):
-        self.selisih_goal = abs(self.goal_kebobolan - self.goal_masuk)
+        self.selisih_goal = self.goal_masuk-self.goal_kebobolan
         super(Team, self).save(*args, **kwargs)
 
     def add_goal(self, masuk, kebobolan):
@@ -124,6 +125,8 @@ class MatchHistory(models.Model):
     category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="category_match_history",blank=True,null=True)
 
     class Meta:
+        app_label = "match_history"
+        db_table = "match_matchhistory"
         ordering = ['-match_date']
 
     def __str__(self):

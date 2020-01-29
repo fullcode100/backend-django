@@ -209,23 +209,26 @@
     }
 ]
 ```
-- /api/match_history/{pk}/
+- /api/match_history/{category_name}/
 ```json
-{
-    "id"
-    "team_a": {
+[
+    {
         "id"
-        "name"
-    }
-    "team_b": {
-        "id"
-        "name"
-    }
-    "is_game"
-    "team_a_goal"
-    "team_b_goal"
-    "stage"
-    "is_a_win"
-    "is_b_win"
-}
+        "team_a": {
+            "id"
+            "name"
+        }
+        "team_b": {
+            "id"
+            "name"
+        }
+        "is_game"
+        "team_a_goal"
+        "team_b_goal"
+        "stage"
+        "is_a_win"
+        "is_b_win"
+    },
+    ......
+]
 ```

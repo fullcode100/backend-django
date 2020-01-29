@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'match',
     'rest_framework',
-    'firebase_utils'
+    'firebase_utils',
+    'match_history'
 ]
 
 MIDDLEWARE = [
@@ -76,11 +77,11 @@ WSGI_APPLICATION = 'perak.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['DBNAME'],
-        'USER': os.environ['DBUSER'],
-        'PASSWORD': os.environ['DBPASSWORD'],
-        'HOST': os.environ['DBHOST'],
-        'PORT': os.environ['DBPORT']
+        'NAME': 'peraktest',
+        'USER': 'perak',
+        'PASSWORD': 'perak123',
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
 
