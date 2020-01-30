@@ -88,6 +88,16 @@ class Team(models.Model):
             self.draw -= 1
             self.points -= self.category.draw
 
+    def reset_statistic(self):
+        self.selisih_goal = 0
+        self.win = 0
+        self.lose = 0
+        self.draw = 0
+        self.goal_kebobolan = 0
+        self.goal_masuk = 0
+        self.points = 0
+        self.banyak_match = 0
+
 
 class Player(models.Model):
     name = models.CharField(max_length=100)

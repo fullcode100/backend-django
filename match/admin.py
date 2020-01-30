@@ -4,6 +4,7 @@ from match import forms
 from match.models import Category, Player, Team, Group, MatchHistory, PostThread
 from match.proxy_model import CSGOMatchHistory, DotaMatchHistory, FutsalMatchHistory
 from match import proxy_model
+from match.admin_actions import team
 
 models = [PostThread]
 
@@ -47,6 +48,7 @@ class TeamAdmin(admin.ModelAdmin):
                        'lose',
                        'win',
                        'points']
+    actions = [team.reset_statistic,]
 
     def get_queryset(self, request):
         qs = super(TeamAdmin, self).get_queryset(request)
@@ -66,6 +68,30 @@ class MatchHistoryAdmin(admin.ModelAdmin):
     exclude = ['group', 'category', 'is_game']
     list_display = admin.ModelAdmin.list_display + ('category',)
 
+    @staticmethod
+    def reset_team_data(team_a, team_b, obj):
+
+        team_a.reduce_goal(obj.team_a_goal, obj.team_b_goal)
+        team_b.reduce_goal(obj.team_b_goal, obj.team_a_goal)
+
+        if obj.is_a_win and obj.is_b_win:
+            team_a.reduce_match_stat("draw")
+            team_b.reduce_match_stat("draw")
+        elif obj.is_a_win:
+            team_a.reduce_match_stat("win")
+            team_b.reduce_match_stat("lose")
+        elif obj.is_b_win:
+            team_a.reduce_match_stat("lose")
+            team_b.reduce_match_stat("win")
+
+    def delete_model(self, request, obj):
+        team_a = obj.team_a
+        team_b = obj.team_b
+        MatchHistoryAdmin.reset_team_data(team_a,team_b,obj)
+        team_a.save()
+        team_b.save()
+        super().delete_model(request, obj)
+
     def get_queryset(self, request):
         qs = super(MatchHistoryAdmin, self).get_queryset(request)
         if hasattr(self, "category"):
@@ -78,18 +104,7 @@ class MatchHistoryAdmin(admin.ModelAdmin):
 
         if change:
             match_history_before = MatchHistory.objects.get(pk=obj.id)
-            team_a.reduce_goal(match_history_before.team_a_goal, match_history_before.team_b_goal)
-            team_b.reduce_goal(match_history_before.team_b_goal, match_history_before.team_a_goal)
-
-            if match_history_before.is_a_win and match_history_before.is_b_win:
-                team_a.reduce_match_stat("draw")
-                team_b.reduce_match_stat("draw")
-            elif match_history_before.is_a_win:
-                team_a.reduce_match_stat("win")
-                team_b.reduce_match_stat("lose")
-            elif match_history_before.is_b_win:
-                team_a.reduce_match_stat("lose")
-                team_b.reduce_match_stat("win")
+            MatchHistoryAdmin.reset_team_data(team_a,team_b,match_history_before)
 
         team_a.add_goal(obj.team_a_goal, obj.team_b_goal)
         team_b.add_goal(obj.team_b_goal, obj.team_a_goal)
