@@ -72,6 +72,8 @@ db_data = {'{}_teams'.format(key): [doc.id for doc in collection[key].stream()] 
 print("Checking data....")
 change = False
 for key in teams.keys():
+    if key == "futsal":
+        continue
     difference = set(db_data['{}_teams'.format(key)]) - set(teams[key])
     if len(difference) != 0:
         print("Update data in {} category".format(key))
