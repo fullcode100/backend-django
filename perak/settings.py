@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'match',
     'rest_framework',
     'firebase_utils',
-    'match_history'
 ]
 
 MIDDLEWARE = [

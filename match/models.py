@@ -44,10 +44,13 @@ class Team(models.Model):
     manager = models.CharField(max_length=100,null=True,blank=True)
 
     class Meta:
-        ordering = ['position']
+        ordering = ['category', 'position']
 
     def __str__(self):
         return "{}-{}".format(self.name,self.group)
+
+    def calibrate_score(self):
+        self.points = self.win*self.category.win + self.lose*self.category.lose + self.draw*self.category.draw
 
     def save(self, *args, **kwargs):
         self.selisih_goal = self.goal_masuk-self.goal_kebobolan
@@ -125,8 +128,6 @@ class MatchHistory(models.Model):
     category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="category_match_history",blank=True,null=True)
 
     class Meta:
-        app_label = "match_history"
-        db_table = "match_matchhistory"
         ordering = ['-match_date']
 
     def __str__(self):

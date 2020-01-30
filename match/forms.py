@@ -24,7 +24,13 @@ class MatchHistoryForm(forms.ModelForm):
             )
 
 
-class FutsalForm(MatchHistoryForm):
+class TeamForm(forms.ModelForm):
+    class Meta:
+        model = models.Team
+        exclude = ['category']
+
+
+class FutsalMatchHistoryForm(MatchHistoryForm):
     team_a = forms.ModelChoiceField(queryset=models.Team.objects.filter(category__name="futsal"))
     team_b = forms.ModelChoiceField(queryset=models.Team.objects.filter(category__name="futsal"))
 
@@ -32,7 +38,7 @@ class FutsalForm(MatchHistoryForm):
         pass
 
 
-class CSGOForm(MatchHistoryForm):
+class CSGOMatchHistoryForm(MatchHistoryForm):
     team_a = forms.ModelChoiceField(queryset=models.Team.objects.filter(category__name="csgo"))
     team_b = forms.ModelChoiceField(queryset=models.Team.objects.filter(category__name="csgo"))
 
@@ -40,9 +46,30 @@ class CSGOForm(MatchHistoryForm):
         pass
 
 
-class DotaForm(MatchHistoryForm):
+class DotaMatchHistoryForm(MatchHistoryForm):
     team_a = forms.ModelChoiceField(queryset=models.Team.objects.filter(category__name="dota"))
     team_b = forms.ModelChoiceField(queryset=models.Team.objects.filter(category__name="dota"))
 
     class Meta(MatchHistoryForm.Meta):
+        pass
+
+
+class DotaTeamForm(TeamForm):
+    group = forms.ModelChoiceField(queryset=models.Group.objects.filter(category__name="dota"))
+
+    class Meta(TeamForm.Meta):
+        pass
+
+
+class CSGOTeamForm(TeamForm):
+    group = forms.ModelChoiceField(queryset=models.Group.objects.filter(category__name="csgo"))
+
+    class Meta(TeamForm.Meta):
+        pass
+
+
+class FutsalTeamForm(TeamForm):
+    group = forms.ModelChoiceField(queryset=models.Group.objects.filter(category__name="futsal"))
+
+    class Meta(TeamForm.Meta):
         pass

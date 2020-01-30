@@ -3,11 +3,23 @@ from match import forms
 # Register your models here.
 from match.models import Category, Player, Team, Group, MatchHistory, PostThread
 from match.proxy_model import CSGOMatchHistory, DotaMatchHistory, FutsalMatchHistory
+from match import proxy_model
 
-models = [Category, PostThread]
+models = [PostThread]
 
 for i in models:
     admin.site.register(i)
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        teams = Team.objects.filter(category=obj)
+        for team in teams:
+            team.calibrate_score()
+            team.save()
 
 
 @admin.register(Group)
@@ -36,14 +48,29 @@ class TeamAdmin(admin.ModelAdmin):
                        'win',
                        'points']
 
+    def get_queryset(self, request):
+        qs = super(TeamAdmin, self).get_queryset(request)
+        if hasattr(self, "category"):
+            return qs.filter(category__name=self.category)
+        return qs
+
     def save_model(self, request, obj, form, change):
-        obj.category = obj.group.category
+        if obj.group is not None:
+            obj.category = obj.group.category
+        obj.calibrate_score()
         super().save_model(request, obj, form, change)
 
 
 @admin.register(MatchHistory)
 class MatchHistoryAdmin(admin.ModelAdmin):
     exclude = ['group', 'category', 'is_game']
+    list_display = admin.ModelAdmin.list_display + ('category',)
+
+    def get_queryset(self, request):
+        qs = super(MatchHistoryAdmin, self).get_queryset(request)
+        if hasattr(self, "category"):
+            return qs.filter(category__name=self.category)
+        return qs
 
     def save_model(self, request, obj, form, change):
         team_a = obj.team_a
@@ -93,29 +120,53 @@ class MatchHistoryAdmin(admin.ModelAdmin):
 
 @admin.register(FutsalMatchHistory)
 class MatchHistoryFutsalAdmin(MatchHistoryAdmin):
-    form = forms.FutsalForm
+    form = forms.FutsalMatchHistoryForm
 
-    def get_queryset(self, request):
-        qs = super(MatchHistoryFutsalAdmin, self).get_queryset(request)
-        futsal = Category.objects.get(name="futsal")
-        return qs.filter(category=futsal)
+    def __init__(self, model, admin_site):
+        super().__init__(model, admin_site)
+        self.category = "futsal"
 
 
 @admin.register(DotaMatchHistory)
 class MatchHistoryDotaAdmin(MatchHistoryAdmin):
-    form = forms.DotaForm
+    form = forms.DotaMatchHistoryForm
 
-    def get_queryset(self, request):
-        qs = super(MatchHistoryDotaAdmin, self).get_queryset(request)
-        dota = Category.objects.get(name="dota")
-        return qs.filter(category=dota)
+    def __init__(self, model, admin_site):
+        super().__init__(model, admin_site)
+        self.category = "dota"
 
 
 @admin.register(CSGOMatchHistory)
 class MatchHistoryCSGOAdmin(MatchHistoryAdmin):
-    form = forms.CSGOForm
+    form = forms.CSGOMatchHistoryForm
 
-    def get_queryset(self, request):
-        qs = super(MatchHistoryCSGOAdmin, self).get_queryset(request)
-        csgo = Category.objects.get(name="csgo")
-        return qs.filter(category=csgo)
+    def __init__(self, model, admin_site):
+        super().__init__(model, admin_site)
+        self.category = "csgo"
+
+
+@admin.register(proxy_model.FutsalTeam)
+class FutsalTeamAdmin(TeamAdmin):
+    form = forms.FutsalTeamForm
+
+    def __init__(self, model, admin_site):
+        super().__init__(model, admin_site)
+        self.category = "futsal"
+
+
+@admin.register(proxy_model.CSGOTeam)
+class CSGOTeamAdmin(TeamAdmin):
+    form = forms.CSGOTeamForm
+
+    def __init__(self, model, admin_site):
+        super().__init__(model, admin_site)
+        self.category = "csgo"
+
+
+@admin.register(proxy_model.DotaTeam)
+class DotaTeamAdmin(TeamAdmin):
+    form = forms.DotaTeamForm
+
+    def __init__(self, model, admin_site):
+        super().__init__(model, admin_site)
+        self.category = "dota"
