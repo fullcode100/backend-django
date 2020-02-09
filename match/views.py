@@ -73,7 +73,7 @@ class MatchHistoryViewSet(viewsets.ReadOnlyModelViewSet):
     def retrieve(self, request, pk=None, *args, **kwargs):
         category = models.Category.objects.get(name=pk)
         query = models.MatchHistory.objects.filter(category=category)
-        if 'size' in request.GET or 'page' in request.GET:
+        if 'size' in request.GET:
             page = self.paginate_queryset(query)
             serializer = self.get_serializer(page,many=True)
             return self.get_paginated_response(serializer.data)
