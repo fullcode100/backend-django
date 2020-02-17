@@ -21,7 +21,7 @@ class TeamAdmin(admin.ModelAdmin):
                        'team_logo',
                        'group',
                        'name']
-    actions = [team.reset_statistic, ]
+    actions = [team.reset_statistic, team.calibrate_score,]
 
     def get_readonly_fields(self, request, obj=None):
         read_only_fields = super(TeamAdmin, self).get_readonly_fields(request, obj)
