@@ -39,7 +39,8 @@ class TeamAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if obj.group is not None:
             obj.category = obj.group.category
-        obj.calibrate_score()
+        if request.user.groups.filter(name="Publisher").exists():
+            obj.calibrate_score()
         super().save_model(request, obj, form, change)
 
 
