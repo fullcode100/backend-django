@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'match',
     'rest_framework',
     'firebase_utils',
+    'gameperak',
 ]
 
 MIDDLEWARE = [
