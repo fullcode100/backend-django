@@ -22,6 +22,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('api/', include(match_routers.router.urls)),
+    path('game/', include('gameperak.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/',include('rest_framework.urls'))
 ]
